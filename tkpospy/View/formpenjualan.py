@@ -6,8 +6,8 @@ except ImportError:
     import Tkinter as tk
     import ttk
 
-class Penjualan(tk.Tk):
-
+class SaleForm(tk.Tk):
+    """class of SaleForm GUI"""
     def __init__(self):
         self.root=tk.Tk()
         self.root.geometry("+200+200")
@@ -61,10 +61,14 @@ class Penjualan(tk.Tk):
         self.Frame1l2.grid_rowconfigure(0,weight=1)
 
         self.Label = tk.Label(self.Frame1l2,text ="No Faktur",anchor = "e")
-        self.Label.grid(row =0,column=0, sticky="nsew")
+        self.Label.grid(row =0,column=0, sticky="nsew",padx=10 ,ipadx=5,ipady=5)
 
-        self.Etry = tk.Entry(self.Frame1l2,text ="No Faktur",state="disable")
-        self.Etry.grid(row =0,column=1, sticky="nsew",pady=5,ipady=5)
+        self.labeloptions = ("BC332115456")
+
+        self.label1 = tk.Label(self.Frame1l2,text = self.labeloptions,anchor="ce",font = ("arial",14))
+        #self.Etry1.insert(0,"test")
+        self.label1.grid(row =0,column=1, sticky="nsew",pady=5,ipady=5)
+
 
         """
         TreeVi kiri
@@ -129,7 +133,7 @@ class Penjualan(tk.Tk):
         Frame Kanan Kedua
         """
 
-        self.LabelFrame2 = tk.LabelFrame(self.Frame2,text = "TOTAL PENJUALAN",font=("Liberation Sans",12))
+        self.LabelFrame2 = tk.LabelFrame(self.Frame2,text = "TOTAL SaleForm",font=("Liberation Sans",12))
         self.LabelFrame2.grid(row=2,column=0,sticky="nsew")
 
         self.LabelFrame2.grid_rowconfigure(0,weight=2)
@@ -154,7 +158,6 @@ class Penjualan(tk.Tk):
         self.Etry = tk.Entry(self.LabelFrame2,font=("liberation sans",20))
         self.Etry.grid(row=3,column=1,sticky="nsew")
 
-
         """
         Frame Kanan Ketiga
         """
@@ -162,18 +165,31 @@ class Penjualan(tk.Tk):
         self.Frame2r3.grid(row=3,column=0,sticky="nsew")
         self.Frame2r3.grid_rowconfigure(0,weight=1)
         self.Frame2r3.grid_columnconfigure(0,weight=1)
+        self.Frame2r3.grid_columnconfigure(1,weight=1)
 
-        self.Button1=tk.Button(self.Frame2r3,text="test")
+        self.Button1=tk.Button(self.Frame2r3,text="Print",command = self.ButExe)
         self.Button1.grid(row=0,column=0,sticky="nsew")
-
-
-
+        self.Button2=tk.Button(self.Frame2r3,text="Batal",command= self.ButCanc)
+        self.Button2.grid(row=0,column=1,sticky="nsew")
 
     def mainloop(self):
         self.root.mainloop()
 
+    def ButExe(self):
+        print ("Execute working")
+        pass
+    
+    def ButCanc(self):
+        print ("Execute cancel is also working")
+        pass
+
+    def nofaktur(self):
+        outputm=self.Etry.setvar("test")
+        print (outputm)
+        pass
+
 
 if __name__=="__main__":
-    K = Penjualan()
+    K = SaleForm()
     K.mainloop()
     
