@@ -1,0 +1,92 @@
+Language,Indonesia.csv
+From,Indonesia.csv
+1,Penjualan
+2,Rekam Penjualan
+3,Inventori
+4,Pengaturan
+5,Tambah Produk
+6,Nama Produk
+7,Harga
+8,Gagal Tambah Produk
+9,Anda harus memasukan nama item dan harga
+10,Klik 2 kali untuk memilih tanggal
+11,Anda harus memilih tanggal yang akurat
+12,Pemilihan tanggal salah
+13,Ubah Informasi Produk
+14,Informasi produk gagal diubah
+15,Tambah item 
+16,Banyaknya
+17,ID Produk
+18,Produk
+19,ID
+20,Byk
+21,Jumlah
+22,ID Penjualan
+23,Tanggal
+24,Total Keseluruhan
+25,Keluar
+26,Pengaturan Program
+27,Pemilihan Bahasa
+28,Tentang
+29,Berkas
+30,Ubah
+31,Bantuan
+32,Pengaturan Inventori
+33,Cari
+34,Rincian Produk
+35,Pilihan Inventory
+36,Resep
+37,Rangkuman Penjualan
+38,Sub Total
+39,Total
+40,Pajak Penjualan
+41,Transaksi Lengkap
+42,Batal
+43,Anda harus memasukkan jumlah dan harga
+44,Transaksi lengkap gagal
+45,Anda harus tambahkan item terlebih dahulu
+46,Nomor Resep
+47,Ubah Resep
+48,Periode Penjualan
+49,Penjualan Pembelian Rekam
+50,Pilih Perioda Penjualan
+51,Hari
+52,Minggu
+53,Bulan
+54,Tahun
+55,Tanggal Awal
+56,Tanggal Akhir
+57,Rangkuman Produk Penjualan
+58,Pilih Tanggal Awal
+59,Kustom
+60,Tanggal dimulai lebih besar dari tanggal akhir
+61,Pemilihan tanggal salah
+62,Pilih tanggal akhir
+63,Bahasa
+64,Simbol Mata Uang
+65,Desimal Mata Uang
+66,Pecahan Ribuan
+67,Rerata Pajak Penjualan
+68,Apakah anda yakin ingin mereset database?
+69,Ubah Bahasa
+70,Tambah Bahasa
+71,Pilihan Bahasa
+72,Nama Bahasa Baru
+73,Dari
+74,Bahasa sudah ada yang sama
+75,Anda harus memasukan Nama Bahasa
+76,Nama Gagal
+77,Kembali
+78,Berikutnya
+79,Simpan
+80,Halaman
+81,Item Bulk
+82,Database Reset (Bahaya)
+83,Jalankan Ulang Program
+84,
+85,
+86,
+87,
+88,
+89,
+90,
