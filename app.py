@@ -6,14 +6,10 @@ class controller(timer.FullScreenApp):
 
     def __init__(self,*args):
         timer.FullScreenApp.__init__(self,*args)
-
         self.setting()
-
-
-        pass
-
     
-    def masuk(self):
+    def masuk(self,event):
+        print ("hello world")
         pass
 
 root=tk.Tk()
