@@ -5,7 +5,7 @@
 
 #gui = timer.FullScreenApp()
 import csv
-class Csv():
+class Csv(object):
     def __init__(self,parent):
         self.parent = parent
         self.a = None
@@ -34,7 +34,3 @@ class Csv():
             pass
         
         return self.hasil
-        
-
-maink = Csv("admin")
-maink.kondisi()

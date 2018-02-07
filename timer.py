@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
 import tkinter as tk
+import datetime
+
 
 class FullScreenApp(object):
     def __init__(self, master, **kwargs):
-        self.master= master
+        self.master = master
         #self.master.overrideredirect(True)
   
         '''self.frames = {}
@@ -22,7 +24,6 @@ class FullScreenApp(object):
         self.master.configure(background='#26446b')
         self.master.title('PMC Software House')
         self.master.protocol("WM_DELETE_WINDOW", self.tahantutup)
-
 
       
         self.master.grid_rowconfigure(0,weight = 1)
@@ -74,24 +75,28 @@ class FullScreenApp(object):
         self.button3=tk.Button(self.Frame3,text="Admin",width=10,height=2)
         self.button3.grid(row=2,column=0)
         self.button3.bind("<Button-1>",self.show)
-        pass
+
 
     def tahantutup(self):
 
         pass       
 
     def hapus(self,event):
-        print("digunakan untuk menghapus")
+        #print("digunakan untuk menghapus")
+        pass
 
     def masuk(self,event):
         print ("digunakan untuk masuk")
         self.master.withdraw()
-        self.bukaframe = RangkaBill()
-
+        #self.currenttime=""
+        #self.currenttime=datetime.datetime.now()
+        self.bukaframe = RangkaBill(self.master)
+        pass
     def show(self,event):
+        print ("masuk admin")
         self.master.withdraw()
-        self.buka = RangkaAdmin()
- 
+        self.buka = RangkaAdmin(self.master)
+        pass
     def tutup(self,event):
         self.master.destroy()
         pass
@@ -101,10 +106,13 @@ class FullScreenApp(object):
         print(geom,self._geom)
         self.master.geometry(self._geom)
         self._geom=geom
+        pass
 
-
+"""
+Kelas yang di bawah adalah kelas untuk memunculkan GUI Admin
+"""
 class RangkaAdmin(FullScreenApp):
-    def __init__(self):
+    def __init__(self,master):
         FullScreenApp.__init__(self,master)
         self.utama= tk.Toplevel()
         self.utama.title("Pengaturan Admin")
@@ -142,22 +150,33 @@ class RangkaAdmin(FullScreenApp):
         self.master.deiconify()           
 
     def tutup(self,event):
-        
+        import csvfile
         self.a = self.entry1.get()
-        bukacsvpassword = simpanpassw(self.a)
-
-        if self.a == "admin" :
-            print (self.a)
+        self.kondisi = csvfile.Csv(None)
+        self.baca = self.kondisi.bacacsv()
+        """print ("tutup")"""
+        if self.a == self.baca :
+            #print (self.a)
+            self.utama.destroy()
             self.master.destroy()
+            
         else :
             self.utama.destroy()
             self.master.update()
             self.master.deiconify()               
         pass
 
+"""
+Kelas yang di bawah adalah kelas untuk memunculkan GUI Billing
+"""
+
+
 class RangkaBill(FullScreenApp):
-    def __init__(self):
+    def __init__(self,master):
         FullScreenApp.__init__(self,master)
+        #self.currenttime=currenttime
+        #self.master=master
+        #print(self.currenttime)
         self.utama=tk.Toplevel()
         self.utama.title("Durasi")
         self.utama.wm_geometry("275x75")
@@ -168,41 +187,53 @@ class RangkaBill(FullScreenApp):
         
         self.label=tk.Label(self.frame,text="Waktu Start",anchor=tk.W)
         self.label.grid(row=0,column=0,sticky=tk.W)
-        self.Entry1=tk.Entry(self.frame)
+        self.v = tk.StringVar()
+        self.v.set(self.currenttime.strftime("%H:%M:%S %d:%m:%Y"))
+        self.Entry1=tk.Entry(self.frame,textvariable=self.v)
         self.Entry1.grid(row=0,column=1,sticky=tk.W)
-
+        self.wb = datetime.datetime.now() + datetime.timedelta(seconds=0,minutes=0, hours=3)
+        self.wb = self.wb.strftime('%H:%M:%S %d-%m-%Y')
+        self.j = tk.StringVar()
+        self.j.set(self.wb)
         self.label=tk.Label(self.frame,text="Waktu Berakhir",anchor=tk.W)
         self.label.grid(row=1,column=0,sticky=tk.W)
-        self.Entry1=tk.Entry(self.frame)
+        self.Entry1=tk.Entry(self.frame,textvariable=self.j)
         self.Entry1.grid(row=1,column=1,sticky=tk.W)
 
         self.Button1=tk.Button(self.frame,text = "Selesai")
         self.Button1.grid(row=2,column=1)
         self.Button1.bind("<Button-1>",self.selesai)
+        """
+        while True:
+            if self.currenttime==self.wb:
 
-
+                break
+            else:
+                print (self.currenttime,self.wb)
+                pass
+        """   
+    
     def tahantutup(self):
         pass        
     def selesai(self,event):
         self.utama.destroy()
         self.master.update()
-        self.master.deiconify()           
+        self.master.deiconify()
         pass
 
-class simpanpassw():
-    def __init__(self,parent):
+class Timing():
+        #import time;
+        localtime =  datetime.datetime.now()
+        localtime =  datetime.datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+        #localtime2 = time.time()
+ #       print ("Local current time :", localtime)
+        #print (localtime2)
 
-        print ("hello masuk simpan passw")
-        self.nfile=parent
-       
-       
-        pass
-    
-    def buatfile(self):
-        pass
+        #print (localtime)
+        
 
-
-master=tk.Tk()
-app=FullScreenApp(master)
-app.setting()
-master.mainloop()
+if __name__=="__main__":
+    master=tk.Tk()
+    app=FullScreenApp(master)
+    app.setting()
+    master.mainloop()
