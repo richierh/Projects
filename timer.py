@@ -2,6 +2,8 @@
 
 import tkinter as tk
 import datetime
+import clock
+import time
 
 
 class FullScreenApp(object):
@@ -75,8 +77,7 @@ class FullScreenApp(object):
         self.button3=tk.Button(self.Frame3,text="Admin",width=10,height=2)
         self.button3.grid(row=2,column=0)
         self.button3.bind("<Button-1>",self.show)
-
-
+    
     def tahantutup(self):
 
         pass       
@@ -84,14 +85,14 @@ class FullScreenApp(object):
     def hapus(self,event):
         #print("digunakan untuk menghapus")
         pass
-
+        
     def masuk(self,event):
         print ("digunakan untuk masuk")
         self.master.withdraw()
-        #self.currenttime=""
-        #self.currenttime=datetime.datetime.now()
+
         self.bukaframe = RangkaBill(self.master)
         pass
+        
     def show(self,event):
         print ("masuk admin")
         self.master.withdraw()
@@ -107,6 +108,8 @@ class FullScreenApp(object):
         self.master.geometry(self._geom)
         self._geom=geom
         pass
+
+
 
 """
 Kelas yang di bawah adalah kelas untuk memunculkan GUI Admin
@@ -174,47 +177,58 @@ Kelas yang di bawah adalah kelas untuk memunculkan GUI Billing
 class RangkaBill(FullScreenApp):
     def __init__(self,master):
         FullScreenApp.__init__(self,master)
-        #self.currenttime=currenttime
-        #self.master=master
-        #print(self.currenttime)
+
         self.utama=tk.Toplevel()
         self.utama.title("Durasi")
-        self.utama.wm_geometry("275x75")
+        self.utama.wm_geometry("275x90")
         self.utama.protocol("WM_DELETE_WINDOW", self.tahantutup)
-   
+
+
         self.frame=tk.Frame(self.utama)
         self.frame.grid(row=0,column=0)
         
         self.label=tk.Label(self.frame,text="Waktu Start",anchor=tk.W)
         self.label.grid(row=0,column=0,sticky=tk.W)
+
+
+        self.currenttime = time.strftime("%H:%M:%S %d-%m-%Y")
+
         self.v = tk.StringVar()
-        self.v.set(self.currenttime.strftime("%H:%M:%S %d:%m:%Y"))
+        self.v.set(self.currenttime)
+        
         self.Entry1=tk.Entry(self.frame,textvariable=self.v)
         self.Entry1.grid(row=0,column=1,sticky=tk.W)
+
         self.wb = datetime.datetime.now() + datetime.timedelta(seconds=0,minutes=0, hours=3)
+        
         self.wb = self.wb.strftime('%H:%M:%S %d-%m-%Y')
+
         self.j = tk.StringVar()
         self.j.set(self.wb)
+
         self.label=tk.Label(self.frame,text="Waktu Berakhir",anchor=tk.W)
         self.label.grid(row=1,column=0,sticky=tk.W)
         self.Entry1=tk.Entry(self.frame,textvariable=self.j)
         self.Entry1.grid(row=1,column=1,sticky=tk.W)
 
-        self.Button1=tk.Button(self.frame,text = "Selesai")
-        self.Button1.grid(row=2,column=1)
-        self.Button1.bind("<Button-1>",self.selesai)
-        """
-        while True:
-            if self.currenttime==self.wb:
+        self.label=tk.Label(self.frame,text="Waktu Berjalan",anchor=tk.W)
+        self.label.grid(row=2,column=0,sticky=tk.W)
+        self.Entry1=tk.Entry(self.frame,textvariable=self.j)
+        self.Entry1.grid(row=2,column=1,sticky=tk.W)
 
-                break
-            else:
-                print (self.currenttime,self.wb)
-                pass
-        """   
+        #self.tick = clock.timerunning()
+
+
+
+        self.Button1=tk.Button(self.frame,text = "Selesai")
+        self.Button1.grid(row=3,column=1)
+        self.Button1.bind("<Button-1>",self.selesai)
+        
+
     
     def tahantutup(self):
         pass        
+ 
     def selesai(self,event):
         self.utama.destroy()
         self.master.update()
