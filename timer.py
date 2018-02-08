@@ -2,8 +2,6 @@
 
 import tkinter as tk
 import datetime
-import clock
-import time
 
 
 class FullScreenApp(object):
@@ -183,15 +181,17 @@ class RangkaBill(FullScreenApp):
         self.utama.wm_geometry("275x90")
         self.utama.protocol("WM_DELETE_WINDOW", self.tahantutup)
 
-
+        """
+        Frame Utama
+        """
         self.frame=tk.Frame(self.utama)
         self.frame.grid(row=0,column=0)
         
         self.label=tk.Label(self.frame,text="Waktu Start",anchor=tk.W)
         self.label.grid(row=0,column=0,sticky=tk.W)
 
-
-        self.currenttime = time.strftime("%H:%M:%S %d-%m-%Y")
+        self.currenttime = datetime.datetime.now()
+        self.currenttime=self.currenttime.strftime("%H:%M:%S %d-%m-%Y")
 
         self.v = tk.StringVar()
         self.v.set(self.currenttime)
@@ -199,7 +199,8 @@ class RangkaBill(FullScreenApp):
         self.Entry1=tk.Entry(self.frame,textvariable=self.v)
         self.Entry1.grid(row=0,column=1,sticky=tk.W)
 
-        self.wb = datetime.datetime.now() + datetime.timedelta(seconds=0,minutes=0, hours=3)
+        self.wb = datetime.datetime.now() + datetime.timedelta(seconds=10\
+        ,minutes=0, hours=0)
         
         self.wb = self.wb.strftime('%H:%M:%S %d-%m-%Y')
 
@@ -211,13 +212,16 @@ class RangkaBill(FullScreenApp):
         self.Entry1=tk.Entry(self.frame,textvariable=self.j)
         self.Entry1.grid(row=1,column=1,sticky=tk.W)
 
+        self.runT = datetime.timedelta(seconds=-1)+datetime.datetime.now()
+        self.runT = self.runT.strftime("%H:%M:%S %d:%m:%Y")
+  
+        self.run_time=tk.StringVar()
+        self.run_time.set(self.runT)
+
         self.label=tk.Label(self.frame,text="Waktu Berjalan",anchor=tk.W)
         self.label.grid(row=2,column=0,sticky=tk.W)
-        self.Entry1=tk.Entry(self.frame,textvariable=self.j)
+        self.Entry1=tk.Entry(self.frame,textvariable=self.run_time)
         self.Entry1.grid(row=2,column=1,sticky=tk.W)
-
-        #self.tick = clock.timerunning()
-
 
 
         self.Button1=tk.Button(self.frame,text = "Selesai")
@@ -225,7 +229,28 @@ class RangkaBill(FullScreenApp):
         self.Button1.bind("<Button-1>",self.selesai)
         
 
+
+        self.runT = self.runT
+        self.curetime = datetime.datetime.now()
+        self.curetime =  self.curetime.strftime("%H:%M:%S %d:%m:%Y")
+        self.utama.after(500,self.looping)
+
     
+    def looping(self):
+        while True:
+            if self.curetime != self.runT:
+                print (self.runT)
+                self.runT = self.curetime
+                print (self.runT)
+                print (self.wb)
+            elif self.runT >= self.wb :
+                self.utama.destroy()
+                self.master.update()
+                self.master.deiconify()
+                print ('selesai')
+            
+
+
     def tahantutup(self):
         pass        
  
