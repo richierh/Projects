@@ -12,7 +12,8 @@ class MainFrame(object):
     def __init__(self, master, **kwargs):
         self.master = master
         self.welc_mess = "Selamat datang \nUntuk memulai \nSilahkan tentukan waktu\nTerlebih dahulu"
-
+        self.val = (0,5,10,15,20,25,30,35,40,45,50,55)
+        
         #self.master.overrideredirect(True)
   
         '''self.frames = {}
@@ -53,7 +54,8 @@ class MainFrame(object):
         self.Frame2.grid(row=1,column=0)
         self.Frame2.configure(background='#26446b')
 
-        self.label1=tk.Label(self.Frame2,foreground="white",text = " Masukkan self.welc_mess waktu dlm jam",font=("Arial",15))
+        self.label1=tk.Label(self.Frame2,foreground="white",\
+        text = " Masukkan waktu dlm jam",font=("Arial",15))
         self.label1.grid(row=0,column=0)
         self.label1.configure(background='#26446b')
         
@@ -62,11 +64,12 @@ class MainFrame(object):
         self.lbox.grid(row=0,column=1)
         self.lbox.configure(background='#26446b')
 
-        self.lbox2=tk.Spinbox(self.Frame2,foreground="white",values=(0,5,10,15,20,25,30,35,40,45,50,55),font=("Arial",30))
+        self.lbox2=tk.Spinbox(self.Frame2,foreground="white",from_=0,to=100000,increment=5,font=("Arial",30))
         self.lbox2.grid(row=1,column=1)
         self.lbox2.config(background='#26446b')
 
-        self.label2=tk.Label(self.Frame2,foreground="white",text = "Masukan self.welc_mess waktu dalam menit",font=("Arial",15))
+        self.label2=tk.Label(self.Frame2,foreground="white",\
+        text = "Masukan waktu dalam menit",font=("Arial",15))
         self.label2.grid(row=1,column=0)
         self.label2.configure(background='#26446b')
         
@@ -90,20 +93,22 @@ class MainFrame(object):
         pass       
 
     def hapus(self,event):
-        #print("digunakan untuk menghapus")
+        ##print("digunakan untuk menghapus")
         pass
         
     def masuk(self,event):
-        print ("digunakan untuk masuk")
-        print(self.lbox2.get())
+        #print ("digunakan untuk masuk")
+        #print(self.lbox2.get())
+        self.hour = self.lbox.get()*60
+        self.minute = self.lbox2.get()
 
         self.master.withdraw()
 
-        self.bukaframe = RangkaBill(self.master)
+        self.bukaframe = RangkaBill(self.master,self.hour,self.minute)
         pass
         
     def show(self,event):
-        print ("masuk admin")
+        #print ("masuk admin")
         self.master.withdraw()
         self.buka = RangkaAdmin(self.master)
         pass
@@ -113,7 +118,7 @@ class MainFrame(object):
     
     def toggle_geom(self,event):
         geom=self.master.winfo_geometry()
-        print(geom,self._geom)
+        #print(geom,self._geom)
         self.master.geometry(self._geom)
         self._geom=geom
         pass
@@ -129,6 +134,7 @@ class RangkaAdmin(MainFrame):
         self.utama= tk.Toplevel()
         self.utama.title("Pengaturan Admin")
         self.utama.wm_geometry("275x75")
+
         #self.utama.protocol("WM_DELETE_WINDOW", self.tahantutup)
 
         self.Frame=tk.Frame(self.utama)
@@ -166,9 +172,9 @@ class RangkaAdmin(MainFrame):
         self.a = self.entry1.get()
         self.kondisi = csvfile.Csv(None)
         self.baca = self.kondisi.bacacsv()
-        """print ("tutup")"""
+        """#print ("tutup")"""
         if self.a == self.baca :
-            #print (self.a)
+            ##print (self.a)
             self.utama.destroy()
             self.master.destroy()
             
@@ -184,10 +190,14 @@ Kelas yang di bawah adalah kelas untuk memunculkan GUI Billing
 
 
 class RangkaBill(MainFrame):
-    def __init__(self,*args):
-        MainFrame.__init__(self,*args)
-        #print (*args,"hlll")
+    def __init__(self,master,hour,minute):
+        MainFrame.__init__(self,master)
+        ##print (*args,"hlll")
         self.utama=tk.Toplevel()
+        self.master = master
+        self.hour = hour        
+        self.minute = minute
+        
         self.utama.title("self.welc_mess")
         self.utama.wm_geometry("275x90")
         self.utama.protocol("WM_DELETE_WINDOW", self.tahantutup)
@@ -210,8 +220,8 @@ class RangkaBill(MainFrame):
         self.Entry1=tk.Entry(self.frame,textvariable=self.v)
         self.Entry1.grid(row=0,column=1,sticky=tk.W)
 
-        self.wb = datetime.datetime.now() + datetime.timedelta(seconds=10\
-        ,minutes=0, hours=0)
+        self.wb = datetime.datetime.now() + datetime.timedelta(seconds=0\
+        ,minutes=int(self.minute), hours=int(self.hour))
         
         self.wb = self.wb.strftime('%H:%M:%S, %d-%m-%Y')
 
@@ -248,15 +258,15 @@ class RangkaBill(MainFrame):
         self.curetime = datetime.datetime.now()
         self.curetime =  self.curetime.strftime("%H:%M:%S, %d:%m:%Y")
         if self.curetime != self.runT:
-            print (self.runT)
+            #print (self.runT)
             self.runT = self.curetime
-            print (self.runT)
-            print (self.wb)
+            #print (self.runT)
+            #print (self.wb)
         elif self.runT >= self.wb :
             self.utama.destroy()
             self.master.update()
             self.master.deiconify()
-            print ('selesai')
+            #print ('selesai')
         self.run_time.set(self.runT)
 
         self.utama.after(200,self.looping)
@@ -277,10 +287,10 @@ class Timing():
         localtime =  datetime.datetime.now()
         localtime =  datetime.datetime.now().strftime('%H:%M:%S %d-%m-%Y')
         #localtime2 = time.time()
- #       print ("Local current time :", localtime)
-        #print (localtime2)
+ #       #print ("Local current time :", localtime)
+        ##print (localtime2)
 
-        #print (localtime)
+        ##print (localtime)
         
 
 if __name__=="__main__":
