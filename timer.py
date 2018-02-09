@@ -4,9 +4,15 @@ import tkinter as tk
 import datetime
 
 
-class FullScreenApp(object):
+class MainFrame(object):
+    """
+    This is the Main Window , it will open with  full screen mode.
+    Ini adalah jendela utama, akan terbuka dalam mode full screen.
+    """
     def __init__(self, master, **kwargs):
         self.master = master
+        self.welc_mess = "Selamat datang \nUntuk memulai \nSilahkan tentukan waktu\nTerlebih dahulu"
+
         #self.master.overrideredirect(True)
   
         '''self.frames = {}
@@ -14,8 +20,12 @@ class FullScreenApp(object):
                 frame = f(self.container, self)
             fram   e.grid(row=2, column=2, sticky=tk.NW+tk.SE)
             self.frames[f] = frame
-            '''
+        '''
     def setting(self):
+        """
+        I separate the attributes and all the widgets related with the GUI stuff
+        in a function so perhaps it will make the code look easier to read
+        """
         pad=3
         self._geom='200x200+0+0'
         self.master.geometry("{0}x{1}+0+0".format(
@@ -31,11 +41,10 @@ class FullScreenApp(object):
         self.master.grid_rowconfigure(1,weight = 1)
         self.master.grid_rowconfigure(2,weight = 1)
 
-        durasi = "Selamat datang \nUntuk memulai \nSilahkan tentukan waktu\nTerlebih dahulu"
         self.Frame1 = tk.Frame(self.master)
         self.Frame1.grid(row=0,column=0)
 
-        self.label = tk.Label(self.Frame1,text = durasi,font=("Arial",30),foreground="white")
+        self.label = tk.Label(self.Frame1,text = self.welc_mess,font=("Arial",30),foreground="white")
         self.label.grid(row=0,column=0)
         self.label.configure(background='#26446b')
 
@@ -44,7 +53,7 @@ class FullScreenApp(object):
         self.Frame2.grid(row=1,column=0)
         self.Frame2.configure(background='#26446b')
 
-        self.label1=tk.Label(self.Frame2,foreground="white",text = " Masukkan durasi waktu dlm jam",font=("Arial",15))
+        self.label1=tk.Label(self.Frame2,foreground="white",text = " Masukkan self.welc_mess waktu dlm jam",font=("Arial",15))
         self.label1.grid(row=0,column=0)
         self.label1.configure(background='#26446b')
         
@@ -57,7 +66,7 @@ class FullScreenApp(object):
         self.lbox2.grid(row=1,column=1)
         self.lbox2.configure(background='#26446b')
 
-        self.label2=tk.Label(self.Frame2,foreground="white",text = "Masukan durasi waktu dalam menit",font=("Arial",15))
+        self.label2=tk.Label(self.Frame2,foreground="white",text = "Masukan self.welc_mess waktu dalam menit",font=("Arial",15))
         self.label2.grid(row=1,column=0)
         self.label2.configure(background='#26446b')
         
@@ -112,9 +121,9 @@ class FullScreenApp(object):
 """
 Kelas yang di bawah adalah kelas untuk memunculkan GUI Admin
 """
-class RangkaAdmin(FullScreenApp):
+class RangkaAdmin(MainFrame):
     def __init__(self,master):
-        FullScreenApp.__init__(self,master)
+        MainFrame.__init__(self,master)
         self.utama= tk.Toplevel()
         self.utama.title("Pengaturan Admin")
         self.utama.wm_geometry("275x75")
@@ -172,12 +181,12 @@ Kelas yang di bawah adalah kelas untuk memunculkan GUI Billing
 """
 
 
-class RangkaBill(FullScreenApp):
+class RangkaBill(MainFrame):
     def __init__(self,master):
-        FullScreenApp.__init__(self,master)
+        MainFrame.__init__(self,master)
 
         self.utama=tk.Toplevel()
-        self.utama.title("Durasi")
+        self.utama.title("self.welc_mess")
         self.utama.wm_geometry("275x90")
         self.utama.protocol("WM_DELETE_WINDOW", self.tahantutup)
 
@@ -191,7 +200,7 @@ class RangkaBill(FullScreenApp):
         self.label.grid(row=0,column=0,sticky=tk.W)
 
         self.currenttime = datetime.datetime.now()
-        self.currenttime=self.currenttime.strftime("%H:%M:%S %d-%m-%Y")
+        self.currenttime=self.currenttime.strftime("%H:%M:%S, %d-%m-%Y")
 
         self.v = tk.StringVar()
         self.v.set(self.currenttime)
@@ -202,21 +211,19 @@ class RangkaBill(FullScreenApp):
         self.wb = datetime.datetime.now() + datetime.timedelta(seconds=10\
         ,minutes=0, hours=0)
         
-        self.wb = self.wb.strftime('%H:%M:%S %d-%m-%Y')
+        self.wb = self.wb.strftime('%H:%M:%S, %d-%m-%Y')
 
-        self.j = tk.StringVar()
-        self.j.set(self.wb)
+        self.timestopping = tk.StringVar()
+        self.timestopping.set(self.wb)
 
         self.label=tk.Label(self.frame,text="Waktu Berakhir",anchor=tk.W)
         self.label.grid(row=1,column=0,sticky=tk.W)
-        self.Entry1=tk.Entry(self.frame,textvariable=self.j)
+        self.Entry1=tk.Entry(self.frame,textvariable=self.timestopping)
         self.Entry1.grid(row=1,column=1,sticky=tk.W)
 
         self.runT = datetime.timedelta(seconds=-1)+datetime.datetime.now()
-        self.runT = self.runT.strftime("%H:%M:%S %d:%m:%Y")
-  
+        self.runT = self.runT.strftime("%H:%M:%S, %d:%m:%Y")
         self.run_time=tk.StringVar()
-        self.run_time.set(self.runT)
 
         self.label=tk.Label(self.frame,text="Waktu Berjalan",anchor=tk.W)
         self.label.grid(row=2,column=0,sticky=tk.W)
@@ -227,28 +234,31 @@ class RangkaBill(FullScreenApp):
         self.Button1=tk.Button(self.frame,text = "Selesai")
         self.Button1.grid(row=3,column=1)
         self.Button1.bind("<Button-1>",self.selesai)
-        
-
-
         self.runT = self.runT
-        self.curetime = datetime.datetime.now()
-        self.curetime =  self.curetime.strftime("%H:%M:%S %d:%m:%Y")
-        self.utama.after(500,self.looping)
 
-    
-    def looping(self):
-        while True:
-            if self.curetime != self.runT:
-                print (self.runT)
-                self.runT = self.curetime
-                print (self.runT)
-                print (self.wb)
-            elif self.runT >= self.wb :
-                self.utama.destroy()
-                self.master.update()
-                self.master.deiconify()
-                print ('selesai')
+        self.looping()
             
+
+
+
+
+    def looping(self):
+        self.curetime = datetime.datetime.now()
+        self.curetime =  self.curetime.strftime("%H:%M:%S, %d:%m:%Y")
+        if self.curetime != self.runT:
+            print (self.runT)
+            self.runT = self.curetime
+            print (self.runT)
+            print (self.wb)
+        elif self.runT >= self.wb :
+            self.utama.destroy()
+            self.master.update()
+            self.master.deiconify()
+            print ('selesai')
+        self.run_time.set(self.runT)
+
+        self.utama.after(200,self.looping)
+
 
 
     def tahantutup(self):
@@ -273,6 +283,6 @@ class Timing():
 
 if __name__=="__main__":
     master=tk.Tk()
-    app=FullScreenApp(master)
+    app=MainFrame(master)
     app.setting()
     master.mainloop()
