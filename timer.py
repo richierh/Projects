@@ -64,7 +64,7 @@ class MainFrame(object):
 
         self.lbox2=tk.Spinbox(self.Frame2,foreground="white",values=(0,5,10,15,20,25,30,35,40,45,50,55),font=("Arial",30))
         self.lbox2.grid(row=1,column=1)
-        self.lbox2.configure(background='#26446b')
+        self.lbox2.config(background='#26446b')
 
         self.label2=tk.Label(self.Frame2,foreground="white",text = "Masukan self.welc_mess waktu dalam menit",font=("Arial",15))
         self.label2.grid(row=1,column=0)
@@ -95,6 +95,8 @@ class MainFrame(object):
         
     def masuk(self,event):
         print ("digunakan untuk masuk")
+        print(self.lbox2.get())
+
         self.master.withdraw()
 
         self.bukaframe = RangkaBill(self.master)
@@ -182,9 +184,9 @@ Kelas yang di bawah adalah kelas untuk memunculkan GUI Billing
 
 
 class RangkaBill(MainFrame):
-    def __init__(self,master):
-        MainFrame.__init__(self,master)
-
+    def __init__(self,*args):
+        MainFrame.__init__(self,*args)
+        #print (*args,"hlll")
         self.utama=tk.Toplevel()
         self.utama.title("self.welc_mess")
         self.utama.wm_geometry("275x90")
