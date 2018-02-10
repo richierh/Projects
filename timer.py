@@ -2,6 +2,7 @@
 
 import tkinter as tk
 import datetime
+import csv
 
 
 class MainFrame(object):
@@ -86,10 +87,9 @@ class MainFrame(object):
         
         self.button3=tk.Button(self.Frame3,text="Admin",width=10,height=2)
         self.button3.grid(row=2,column=0)
-        self.button3.bind("<Button-1>",self.show)
+        self.button3.bind("<Button-1>",self.adminframe)
     
     def tahantutup(self):
-
         pass       
 
     def hapus(self,event):
@@ -99,7 +99,7 @@ class MainFrame(object):
     def masuk(self,event):
         #print ("digunakan untuk masuk")
         #print(self.lbox2.get())
-        self.hour = self.lbox.get()*60
+        self.hour = self.lbox.get()
         self.minute = self.lbox2.get()
 
         self.master.withdraw()
@@ -107,7 +107,7 @@ class MainFrame(object):
         self.bukaframe = RangkaBill(self.master,self.hour,self.minute)
         pass
         
-    def show(self,event):
+    def adminframe(self,event):
         #print ("masuk admin")
         self.master.withdraw()
         self.buka = RangkaAdmin(self.master)
@@ -159,18 +159,24 @@ class RangkaAdmin(MainFrame):
         self.button3.bind("<Button-1>",self.passw)
     
     def passw(self,event):
-        
+        self.a = self.entry1.get()
         self.b = self.entry2.get()
-        bukacsvpassword = simpanpassw(self.b)
-
+        self.gantipassword = Csv(self.a,self.b)
+        self.baca = self.gantipassword.bacacsv()
+        if self.a==self.baca :
+            self.gantipassword.kondisi()
+            self.utama.destroy()
+            self.master.update()
+            self.master.deiconify()    
+        
         self.utama.destroy()
         self.master.update()
         self.master.deiconify()           
 
     def tutup(self,event):
-        import csvfile
         self.a = self.entry1.get()
-        self.kondisi = csvfile.Csv(None)
+        self.b = self.entry2.get()
+        self.kondisi = Csv(self.a,self.b)
         self.baca = self.kondisi.bacacsv()
         """#print ("tutup")"""
         if self.a == self.baca :
@@ -269,7 +275,7 @@ class RangkaBill(MainFrame):
             #print ('selesai')
         self.run_time.set(self.runT)
 
-        self.utama.after(200,self.looping)
+        self.utama.after(500,self.looping)
 
 
 
@@ -291,7 +297,37 @@ class Timing():
         ##print (localtime2)
 
         ##print (localtime)
+
+class Csv(object):
+    def __init__(self,parent,gantipassword):
+        self.parent = parent
+        self.data = ["{}".format(gantipassword)]
+        pass
+
+    def kondisi(self):
+        if self.parent == self.bacacsv():
+            self.masukancsv()
+            print("check")
+        else :
+            pass
+
+    def bacacsv(self):
+        with open('pass.csv', 'r') as csvfile:
+            spamreader = csv.reader(csvfile)#, delimiter=' ', quotechar='|')
+            for row in spamreader:
+                self.a = ', '.join(row)
+        return self.a
+    
+    def masukancsv(self):
+        if self.parent == self.bacacsv():
+            with open("pass.csv", "w") as csv_file:
+                writer = csv.writer(csv_file)#, delimiter=',')
+                self.hasil = writer.writerow(self.data)
+        else :
+            pass
         
+        return self.hasil
+
 
 if __name__=="__main__":
     master=tk.Tk()
